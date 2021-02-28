@@ -2,11 +2,17 @@
 
 Fetches some basic informations from your Valheim server and sends (optionally) messages to Telegram if a player joins or leaves your server.
 
+Used libraries:
 
+- query server data: [node-GameDig](https://github.com/gamedig/node-gamedig)
+- cronjobs: [node-schedule](https://github.com/node-schedule/node-schedule)
+- webserver: [express](https://github.com/expressjs/express)
+- http client: [axios](https://github.com/axios/axios)
+- env variable handling: [dotenv-defaults](https://github.com/mrsteele/dotenv-defaults)
 
 ## Development
 
-Create .env file to override values from .env.defaults.
+Fist, install [Node.js](https://nodejs.org/) locally. Then create an .env file to override values from .env.defaults.
 
 ```bash
 npm install
