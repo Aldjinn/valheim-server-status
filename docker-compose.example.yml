@@ -1,4 +1,5 @@
-version: "3.9"
+version: "3"
+
 services:
   valheim-server-status:
     container_name: valheim-server-status
