@@ -35,7 +35,8 @@ function queryServer() {
     .then((state) => {
       // add querydate to result
       let json = JSON.parse(JSON.stringify(state));
-      json.querydate = new Date().toISOString();
+      json.queryDate = new Date().toISOString();
+      json.numberOfPlayers = state.players.length;
       gamedigResult = json;
 
       console.log(gamedigResult);
@@ -57,17 +58,19 @@ function checkPlayerLeftOrJoined() {
     currentNumberOfPlayers = gamedigResult.players.length;
   } else {
     if (currentNumberOfPlayers != gamedigResult.players.length) {
-      console.log(
-        "number of players has changed from " +
-          currentNumberOfPlayers +
-          " to " +
-          gamedigResult.players.length
-      );
+      const change =
+        "(" +
+        currentNumberOfPlayers +
+        "->" +
+        gamedigResult.players.length +
+        ")";
+
+      console.log("number of players " + change);
 
       if (currentNumberOfPlayers < gamedigResult.players.length) {
-        sendTelegramMessage("Valheim Server: Player joined.");
+        sendTelegramMessage("Valheim Server: Player joined. " + change);
       } else {
-        sendTelegramMessage("Valheim Server: Player left.");
+        sendTelegramMessage("Valheim Server: Player left. " + change);
       }
     }
     currentNumberOfPlayers = gamedigResult.players.length;
