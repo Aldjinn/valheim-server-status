@@ -34,6 +34,6 @@ Now open http://localhost:13080/ in your browser again.
 
 ## Telegram
 
-If you have configured the Telegram settings correctly, a similar message should be sent to your chat after the application has started.
+If you have configured the Telegram settings correctly, a similar message should be sent to your chat after the application has started. As well if someone joines or leaves the server.
 
 ![telegram.png)](telegram.png)
