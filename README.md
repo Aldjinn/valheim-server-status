@@ -12,7 +12,7 @@ Used libraries:
 
 ## Development
 
-Fist, install [Node.js](https://nodejs.org/) locally. Then create an .env file to override values from .env.defaults.
+First, install [Node.js](https://nodejs.org/) locally. Then create an .env file to override values from .env.defaults.
 
 ```bash
 npm install
