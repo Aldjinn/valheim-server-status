@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  valheim-server-status:
+    container_name: valheim-server-status
+    build: .
+    ports:
+      - "13080:13080"
+    environment:
+      - VALHEIM_HOST=my.valheim.host
+      - VALHEIM_PORT=2457
+      - VALHEIM_QUERY_CRON=*/5 * * * *
+      - TELEGRAM_CHAT_ID=-123456789
+      - TELEGRAM_BOT=bot123456789:nuG0iuy7ae9eVah5eef8tahXee6eij8nieD
+      - TELEGRAM_ENABLED=false

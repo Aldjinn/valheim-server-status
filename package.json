@@ -1,0 +1,17 @@
+{
+  "name": "valheim_server_status",
+  "version": "1.0.0",
+  "description": "Valheim Server Status",
+  "author": "Aldjinn <aldjinn@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv-defaults": "^2.0.1",
+    "express": "^4.17.1",
+    "gamedig": "^3.0.0",
+    "node-schedule": "^2.0.0"
+  }
+}
