@@ -26,8 +26,20 @@ Now open http://localhost:13080/ in your browser.
 First create a docker-compose.yml file based on the docker-compose.example.yml. Adjust the environment variables to your needs.
 
 ```bash
-docker-compose build
 docker-compose up
+```
+
+Alternatively you can use docker run as well:
+
+```bash
+docker run -e VALHEIM_HOST='my.valheim.host' \
+    -e VALHEIM_PORT='2457' \
+    -e VALHEIM_QUERY_CRON='*/5 * * * *' \
+    -e TELEGRAM_CHAT_ID='*-123456789' \
+    -e TELEGRAM_BOT='bot123456789:nuG0iuy7ae9eVah5eef8tahXee6eij8nieD' \
+    -e TELEGRAM_ENABLED='false' \
+    -p 13080:13080 \
+    aldjinn/valheim-server-status:latest
 ```
 
 Now open http://localhost:13080/ in your browser again.

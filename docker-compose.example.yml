@@ -3,7 +3,7 @@ version: "3"
 services:
   valheim-server-status:
     container_name: valheim-server-status
-    build: .
+    image: aldjinn/valheim-server-status:latest
     ports:
       - "13080:13080"
     environment:
