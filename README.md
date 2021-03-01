@@ -55,7 +55,7 @@ If you have configured the Telegram settings correctly, a similar message should
 
 ## Prometheus
 
-Some metrics are available for scraping via http://localhost:13080/metrics/ if the application is started with METRICS_ENABLED='true'.
+Some metrics are available for scraping via http://localhost:13080/metrics if the application is started with METRICS_ENABLED='true'.
 
 ```
 # HELP player_count number of players
@@ -66,3 +66,5 @@ player_count 1
 # TYPE server_info gauge
 server_info{version="0.146.11",name="TheBigBadWolf",map="TheBigBadWolf"} 1
 ```
+
+[<img src="prometheus.png" alt="prometheus.png" width="768"/>](prometheus.png)
