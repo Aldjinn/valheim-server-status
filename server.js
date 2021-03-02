@@ -22,9 +22,10 @@ const job = schedule.scheduleJob(process.env.VALHEIM_QUERY_CRON, function () {
 if (process.env.WEBHOOK_ENABLED === "true") {
   router.post("/webhook", (req, res) => {
     console.log(req.body);
-    res.setHeader("Content-Type", "application/json");
-    res.send("OK");
-    telegram.sendTelegramMessage("Valheim Server: " + req.body);
+    telegram.sendTelegramMessage(
+      "Valheim Server: " + JSON.stringify(req.body, null, "\t")
+    );
+    res.sendStatus(204);
   });
 }
 
