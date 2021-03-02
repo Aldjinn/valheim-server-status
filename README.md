@@ -40,7 +40,7 @@ docker run -e VALHEIM_HOST='my.valheim.host' \
     -e TELEGRAM_CHAT_ID='*-123456789' \
     -e TELEGRAM_BOT='bot123456789:nuG0iuy7ae9eVah5eef8tahXee6eij8nieD' \
     -e TELEGRAM_ENABLED='false' \
-    -e TELEGRAM_STARTUP_MESSAGE='true' \
+    -e TELEGRAM_STARTUP_MESSAGE='false' \
     -e METRICS_ENABLED='true' \
     -e WEBHOOK_ENABLED='false' \
     -p 13080:13080 \
