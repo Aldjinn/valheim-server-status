@@ -14,3 +14,4 @@ services:
       - TELEGRAM_BOT=bot123456789:nuG0iuy7ae9eVah5eef8tahXee6eij8nieD
       - TELEGRAM_ENABLED=false
       - METRICS_ENABLED=true
+      - WEBHOOK_ENABLED=false

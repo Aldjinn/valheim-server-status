@@ -7,6 +7,7 @@ Used libraries:
 - query server data: [node-GameDig](https://github.com/gamedig/node-gamedig)
 - cronjobs: [node-schedule](https://github.com/node-schedule/node-schedule)
 - webserver: [express](https://github.com/expressjs/express)
+- webserver body parser: [body-parser](https://github.com/expressjs/body-parser)
 - http client: [axios](https://github.com/axios/axios)
 - env variable handling: [dotenv-defaults](https://github.com/mrsteele/dotenv-defaults)
 - prometheus metrics: [prometheus-api-metrics](https://github.com/PayU/prometheus-api-metrics)
@@ -40,7 +41,9 @@ docker run -e VALHEIM_HOST='my.valheim.host' \
     -e TELEGRAM_CHAT_ID='*-123456789' \
     -e TELEGRAM_BOT='bot123456789:nuG0iuy7ae9eVah5eef8tahXee6eij8nieD' \
     -e TELEGRAM_ENABLED='false' \
+    -e TELEGRAM_STARTUP_MESSAGE='true' \
     -e METRICS_ENABLED='true' \
+    -e WEBHOOK_ENABLED='false' \
     -p 13080:13080 \
     aldjinn/valheim-server-status:latest
 ```
