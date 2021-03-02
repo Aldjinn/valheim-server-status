@@ -1,9 +1,9 @@
-name: build&push latest
+name: build&push develop
 
 on:
   push:
     branches:
-      - "main"
+      - "develop"
 
 jobs:
   docker:
@@ -19,6 +19,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: aldjinn/valheim-server-status:latest
+          tags: aldjinn/valheim-server-status:develop
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
