@@ -31,6 +31,9 @@ if (process.env.WEBHOOK_ENABLED === "true") {
 
 router.get("/status", (req, res) => {
   res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.send(JSON.stringify(valheim.getGamedigResult(), null, "\t"));
 });
 
