@@ -31,9 +31,11 @@ if (process.env.WEBHOOK_ENABLED === "true") {
 
 router.get("/status", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  if (process.env.CORS_ENABLED === "true") {
+    res.setHeader("Access-Control-Allow-Origin", process.env.CORS_ALLOW_ORIGIN);
+    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  }
   res.send(JSON.stringify(valheim.getGamedigResult(), null, "\t"));
 });
 
@@ -54,6 +56,8 @@ function main() {
   console.log(`TELEGRAM_ENABLED=${process.env.TELEGRAM_ENABLED}`);
   console.log(`METRICS_ENABLED=${process.env.METRICS_ENABLED}`);
   console.log(`WEBHOOK_ENABLED=${process.env.WEBHOOK_ENABLED}`);
+  console.log(`CORS_ENABLED=${process.env.CORS_ENABLED}`);
+  console.log(`CORS_ALLOW_ORIGIN=${process.env.CORS_ALLOW_ORIGIN}`);
 
   if (process.env.METRICS_ENABLED === "true") {
     app.use(apiMetrics());

@@ -16,3 +16,5 @@ services:
       - TELEGRAM_STARTUP_MESSAGE=false
       - METRICS_ENABLED=true
       - WEBHOOK_ENABLED=false
+      - CORS_ENABLED=true
+      - CORS_ALLOW_ORIGIN=*

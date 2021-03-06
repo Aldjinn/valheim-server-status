@@ -43,6 +43,8 @@ docker run -e VALHEIM_HOST='my.valheim.host' \
     -e TELEGRAM_STARTUP_MESSAGE='false' \
     -e METRICS_ENABLED='true' \
     -e WEBHOOK_ENABLED='false' \
+    -e CORS_ENABLED='true' \
+    -e CORS_ALLOW_ORIGIN='*' \
     -p 13080:13080 \
     aldjinn/valheim-server-status:latest
 ```
@@ -67,6 +69,17 @@ curl -d "{\"key1\":\"value1\", \"key2\":\"value2\"}" \
     -H "Content-Type: application/json" \
     -X POST http://localhost:13080/webhook
 ```
+
+## CORS Header
+
+In order to use the output of http://localhost:13080/status in a XMLHttpRequest (i.e. to embed server status in a website using javascript), you need to set the "Access-Control-Allow-Origin" header to either '*' or any other origin like 'example.com'.
+
+You can enable this feature by setting
+```ENABLE_CORS=true```
+and
+```CORS_ALLOW_ORIGIN=<origin>```
+
+see https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS for further information.
 
 ## Prometheus
 
