@@ -34,7 +34,10 @@ router.get("/status", (req, res) => {
   if (process.env.CORS_ENABLED === "true") {
     res.setHeader("Access-Control-Allow-Origin", process.env.CORS_ALLOW_ORIGIN);
     res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
   }
   res.send(JSON.stringify(valheim.getGamedigResult(), null, "\t"));
 });
