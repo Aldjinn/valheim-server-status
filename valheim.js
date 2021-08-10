@@ -84,11 +84,11 @@ module.exports = {
 
         if (currentNumberOfPlayers < gamedigResult.players.length) {
           telegram.sendTelegramMessage(
-            "Valheim Server: Player joined. " + change
+            "Player joined. " + change
           );
         } else {
           telegram.sendTelegramMessage(
-            "Valheim Server: Player left. " + change
+            "Player left. " + change
           );
         }
       }

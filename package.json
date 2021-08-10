@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "dotenv-defaults": "^2.0.1",
+    "dotenv-defaults": "^2.0.2",
     "express": "^4.17.1",
-    "gamedig": "^3.0.0",
+    "gamedig": "^3.0.7",
+    "git-last-commit": "^1.0.0",
     "node-schedule": "^2.0.0",
-    "prom-client": "^12.0.0",
-    "prometheus-api-metrics": "^3.1.0"
+    "prom-client": "^13.2.0",
+    "prometheus-api-metrics": "^3.2.0"
   }
 }

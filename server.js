@@ -5,6 +5,7 @@ require("dotenv-defaults").config();
 const express = require("express");
 const schedule = require("node-schedule");
 const apiMetrics = require("prometheus-api-metrics");
+const git = require("git-last-commit");
 
 const telegram = require("./telegram.js");
 const valheim = require("./valheim.js");
@@ -34,9 +35,30 @@ router.get("/status", (req, res) => {
   if (process.env.CORS_ENABLED === "true") {
     res.setHeader("Access-Control-Allow-Origin", process.env.CORS_ALLOW_ORIGIN);
     res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
   }
   res.send(JSON.stringify(valheim.getGamedigResult(), null, "\t"));
+});
+
+router.get("/version", (req, res) => {
+  git.getLastCommit(function (err, commit) {
+    // var s = new Date().toISOString();
+    // 1331209044000;
+    // 1615119262000;
+
+    let json = JSON.parse(JSON.stringify(commit));
+
+    console.log(commit.authoredOn + "000");
+    console.log(commit.committedOn + "000");
+
+    // json.authoredOn = new Date(commit.authoredOn + "000").toISOString();
+    // json.committedOn = new Date(commit.committedOn + "000").toISOString();
+
+    res.send(json);
+  });
 });
 
 router.get("/", (req, res) => {
