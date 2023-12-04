@@ -11,7 +11,7 @@
     "axios": "^1.6.2",
     "dotenv-defaults": "^5.0.2",
     "express": "^4.18.2",
-    "gamedig": "^4.2.0",
+    "gamedig": "^4.3.0",
     "git-last-commit": "^1.0.1",
     "node-schedule": "^2.1.1",
     "prom-client": "^14.2.0",
