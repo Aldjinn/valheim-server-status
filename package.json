@@ -14,7 +14,7 @@
     "gamedig": "^5.1.4",
     "git-last-commit": "^1.0.1",
     "node-schedule": "^2.1.1",
-    "prom-client": "^15.1.3",
+    "prom-client": "^14.2.0",
     "prometheus-api-metrics": "^3.2.2"
   }
 }
