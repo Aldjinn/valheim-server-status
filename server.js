@@ -16,9 +16,12 @@ const HOST = "0.0.0.0";
 const app = express();
 const router = express.Router();
 
-const job = schedule.scheduleJob(process.env.VALHEIM_QUERY_CRON, function () {
-  valheim.queryServer();
-});
+// Only schedule a job if not running tests
+if (process.env.NODE_ENV !== "test") {
+  const job = schedule.scheduleJob(process.env.VALHEIM_QUERY_CRON, function () {
+    valheim.queryServer();
+  });
+}
 
 if (process.env.WEBHOOK_ENABLED === "true") {
   router.post("/webhook", (req, res) => {
@@ -101,4 +104,6 @@ function main() {
 
 if (require.main === module) {
   main();
+} else {
+  module.exports = router; // export router for testing
 }

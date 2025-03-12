@@ -5,7 +5,8 @@
   "author": "Aldjinn <aldjinn@gmail.com>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^1.8.3",
@@ -16,5 +17,9 @@
     "node-schedule": "^2.1.1",
     "prom-client": "^14.2.0",
     "prometheus-api-metrics": "^4.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "supertest": "^6.0.0"
   }
 }
