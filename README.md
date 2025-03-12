@@ -21,7 +21,7 @@ npm install
 node server.js
 ```
 
-Now open http://localhost:13080/status in your browser.
+Now open <http://localhost:13080/status> in your browser.
 
 ## Docker
 
@@ -49,7 +49,7 @@ docker run -e VALHEIM_HOST='my.valheim.host' \
     aldjinn/valheim-server-status:latest
 ```
 
-Now open http://localhost:13080/status in your browser again.
+Now open <http://localhost:13080/status> in your browser again.
 
 ## Telegram
 
@@ -59,7 +59,7 @@ If you have configured the Telegram settings correctly and TELEGRAM_STARTUP_MESS
 
 ## Webhook
 
-If WEBHOOK_ENABLED='true', a webhook is available via http://localhost:13080/webhook which accepts any kind of JSON data via POST. The only functionality implemented yet is to forward the payload to Telegram. In this case, you must have configured the Telegram settings correctly and set TELEGRAM_ENABLED='true.'
+If WEBHOOK_ENABLED='true', a webhook is available via <http://localhost:13080/webhook> which accepts any kind of JSON data via POST. The only functionality implemented yet is to forward the payload to Telegram. In this case, you must have configured the Telegram settings correctly and set TELEGRAM_ENABLED='true.'
 
 For example, this can be used with the webhook support of [valheim-docker](https://github.com/mbround18/valheim-docker/blob/main/docs/webhooks.md).
 
@@ -72,18 +72,18 @@ curl -d "{\"key1\":\"value1\", \"key2\":\"value2\"}" \
 
 ## CORS Header
 
-In order to use the output of http://localhost:13080/status in a XMLHttpRequest (i.e. to embed server status in a website using javascript), you need to set the "Access-Control-Allow-Origin" header to either '*' or any other origin like 'example.com'.
+In order to use the output of <http://localhost:13080/status> in a XMLHttpRequest (i.e. to embed server status in a website using javascript), you need to set the "Access-Control-Allow-Origin" header to either '*' or any other origin like 'example.com'.
 
 You can enable this feature by setting
 ```ENABLE_CORS=true```
 and
 ```CORS_ALLOW_ORIGIN=<origin>```
 
-see https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS for further information.
+see <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS> for further information.
 
 ## Prometheus
 
-Some metrics are available for scraping via http://localhost:13080/metrics if the application is started with METRICS_ENABLED='true'.
+Some metrics are available for scraping via <http://localhost:13080/metrics> if the application is started with METRICS_ENABLED='true'.
 
 ```
 # HELP player_count number of players
@@ -95,4 +95,4 @@ player_count 1
 server_info{version="0.146.11",name="TheBigBadWolf",map="TheBigBadWolf"} 1
 ```
 
-[<img src="prometheus.png" alt="prometheus.png" width="768"/>](prometheus.png)
+![Prometheus screenshot](prometheus.png)
