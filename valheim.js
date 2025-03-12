@@ -1,4 +1,4 @@
-const gamedig = require("gamedig");
+const { GameDig } = require('gamedig'); 
 const prometheus = require("prom-client");
 const telegram = require("./telegram.js");
 
@@ -23,7 +23,7 @@ module.exports = {
   },
 
   queryServer: function () {
-    gamedig
+    GameDig
       .query({
         type: "valheim",
         host: process.env.VALHEIM_HOST,
