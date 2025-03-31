@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^1.8.4",
     "dotenv-defaults": "^5.0.2",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "gamedig": "^5.2.0",
     "git-last-commit": "^1.0.1",
     "node-schedule": "^2.1.1",
