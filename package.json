@@ -19,7 +19,7 @@
     "prometheus-api-metrics": "^4.0.0"
   },
   "devDependencies": {
-    "jest": "^30.0.0",
+    "jest": "^30.0.2",
     "supertest": "^7.1.1"
   }
 }
