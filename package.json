@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.13.4",
-    "dotenv-defaults": "^5.0.2",
+    "dotenv-defaults": "^6.0.0",
     "express": "^5.2.1",
     "gamedig": "^5.3.2",
     "git-last-commit": "^1.0.1",
