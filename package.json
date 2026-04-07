@@ -22,7 +22,7 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.2",
     "babel-jest": "^30.3.0",
-    "baseline-browser-mapping": "^2.10.12",
+    "baseline-browser-mapping": "^2.10.15",
     "jest": "^30.3.0",
     "supertest": "^7.2.2"
   }
