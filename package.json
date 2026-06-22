@@ -19,7 +19,7 @@
     "prometheus-api-metrics": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.29.5",
     "babel-jest": "^30.3.0",
     "baseline-browser-mapping": "^2.10.29",
