@@ -4,8 +4,10 @@ WORKDIR /usr/src/app
 ENV NODE_ENV=production
 
 # Install dependencies first for better layer caching
+# --loglevel=error suppresses upstream ERESOLVE peer-dep warnings
+# (babel-preset-current-node-syntax declares @babel/core ^7, project uses 8)
 COPY package*.json ./
-RUN npm ci --omit=dev && npm cache clean --force
+RUN npm ci --omit=dev --loglevel=error && npm cache clean --force
 
 COPY *.js ./
 
