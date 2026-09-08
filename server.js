@@ -28,7 +28,7 @@ if (config.webhook.enabled) {
   router.post("/webhook", (req, res) => {
     console.log(req.body);
     telegram.sendTelegramMessage(
-      "Valheim Server: " + JSON.stringify(req.body, null, "\t")
+      "Valheim Server: " + JSON.stringify(req.body, null, "\t"),
     );
     res.sendStatus(204);
   });
@@ -41,7 +41,7 @@ router.get("/status", (req, res) => {
     res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS");
     res.setHeader(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
+      "Origin, X-Requested-With, Content-Type, Accept",
     );
   }
   res.send(JSON.stringify(valheim.getGamedigResult(), null, "\t"));

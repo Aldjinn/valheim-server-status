@@ -1,4 +1,4 @@
-const { GameDig } = require('gamedig'); 
+const { GameDig } = require("gamedig");
 const prometheus = require("prom-client");
 const telegram = require("./telegram.js");
 const config = require("./config.js");
@@ -24,14 +24,13 @@ module.exports = {
   },
 
   queryServer: function () {
-    GameDig
-      .query({
-        type: "valheim",
-        host: config.valheim.host,
-        port: config.valheim.port,
-        debug: false,
-        requestRules: true,
-      })
+    GameDig.query({
+      type: "valheim",
+      host: config.valheim.host,
+      port: config.valheim.port,
+      debug: false,
+      requestRules: true,
+    })
       .then((state) => {
         // add querydate to result
         let json = JSON.parse(JSON.stringify(state));
@@ -40,7 +39,7 @@ module.exports = {
         gamedigResult = json;
 
         console.log(
-          `query OK: ${gamedigResult.name} | players: ${gamedigResult.numberOfPlayers}`
+          `query OK: ${gamedigResult.name} | players: ${gamedigResult.numberOfPlayers}`,
         );
         this.adjustMetrics(gamedigResult);
         this.checkPlayerLeftOrJoined(gamedigResult);
@@ -60,7 +59,7 @@ module.exports = {
           name: gamedigResult.name,
           map: gamedigResult.map,
         },
-        1
+        1,
       );
     }
   },
@@ -69,7 +68,7 @@ module.exports = {
     console.log(
       "there are currently " +
         gamedigResult.players.length +
-        " players on the server"
+        " players on the server",
     );
 
     if (currentNumberOfPlayers < 0) {
@@ -86,13 +85,9 @@ module.exports = {
         console.log("number of players " + change);
 
         if (currentNumberOfPlayers < gamedigResult.players.length) {
-          telegram.sendTelegramMessage(
-            "Player joined. " + change
-          );
+          telegram.sendTelegramMessage("Player joined. " + change);
         } else {
-          telegram.sendTelegramMessage(
-            "Player left. " + change
-          );
+          telegram.sendTelegramMessage("Player left. " + change);
         }
       }
       currentNumberOfPlayers = gamedigResult.players.length;

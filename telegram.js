@@ -15,7 +15,7 @@ module.exports = {
       axios
         .post(
           "https://api.telegram.org/" + config.telegram.bot + "/sendMessage",
-          data
+          data,
         )
         .then((res) => {
           console.log(`sendTelegramMessage: ${res.status}`);
