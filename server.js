@@ -9,6 +9,7 @@ const git = require("git-last-commit");
 
 const telegram = require("./telegram.js");
 const valheim = require("./valheim.js");
+const config = require("./config.js");
 
 const PORT = 13080;
 const HOST = "0.0.0.0";
@@ -17,13 +18,13 @@ const app = express();
 const router = express.Router();
 
 // Only schedule a job if not running tests
-if (process.env.NODE_ENV !== "test") {
-  const job = schedule.scheduleJob(process.env.VALHEIM_QUERY_CRON, function () {
+if (!config.isTest) {
+  const job = schedule.scheduleJob(config.valheim.queryCron, function () {
     valheim.queryServer();
   });
 }
 
-if (process.env.WEBHOOK_ENABLED === "true") {
+if (config.webhook.enabled) {
   router.post("/webhook", (req, res) => {
     console.log(req.body);
     telegram.sendTelegramMessage(
@@ -35,8 +36,8 @@ if (process.env.WEBHOOK_ENABLED === "true") {
 
 router.get("/status", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  if (process.env.CORS_ENABLED === "true") {
-    res.setHeader("Access-Control-Allow-Origin", process.env.CORS_ALLOW_ORIGIN);
+  if (config.cors.enabled) {
+    res.setHeader("Access-Control-Allow-Origin", config.cors.allowOrigin);
     res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS");
     res.setHeader(
       "Access-Control-Allow-Headers",
@@ -48,17 +49,15 @@ router.get("/status", (req, res) => {
 
 router.get("/version", (req, res) => {
   git.getLastCommit(function (err, commit) {
-    // var s = new Date().toISOString();
-    // 1331209044000;
-    // 1615119262000;
+    if (err) {
+      console.error("Failed to read last commit:", err.message);
+      res.status(500).send({ error: "commit info unavailable" });
+      return;
+    }
 
     let json = JSON.parse(JSON.stringify(commit));
-
-    console.log(commit.authoredOn + "000");
-    console.log(commit.committedOn + "000");
-
-    // json.authoredOn = new Date(commit.authoredOn + "000").toISOString();
-    // json.committedOn = new Date(commit.committedOn + "000").toISOString();
+    json.authoredOn = new Date(commit.authoredOn * 1000).toISOString();
+    json.committedOn = new Date(commit.committedOn * 1000).toISOString();
 
     res.send(json);
   });
@@ -70,36 +69,51 @@ router.get("/", (req, res) => {
 
 function main() {
   console.log("valheim-server-status");
-  console.log(`VALHEIM_HOST=${process.env.VALHEIM_HOST}`);
-  console.log(`VALHEIM_PORT=${process.env.VALHEIM_PORT}`);
-  console.log(`VALHEIM_QUERY_CRON=${process.env.VALHEIM_QUERY_CRON}`);
-  console.log(`TELEGRAM_CHAT_ID=${process.env.TELEGRAM_CHAT_ID}`);
-  console.log(`TELEGRAM_BOT=${process.env.TELEGRAM_BOT}`);
-  console.log(
-    `TELEGRAM_STARTUP_MESSAGE=${process.env.TELEGRAM_STARTUP_MESSAGE}`
-  );
-  console.log(`TELEGRAM_ENABLED=${process.env.TELEGRAM_ENABLED}`);
-  console.log(`METRICS_ENABLED=${process.env.METRICS_ENABLED}`);
-  console.log(`WEBHOOK_ENABLED=${process.env.WEBHOOK_ENABLED}`);
-  console.log(`CORS_ENABLED=${process.env.CORS_ENABLED}`);
-  console.log(`CORS_ALLOW_ORIGIN=${process.env.CORS_ALLOW_ORIGIN}`);
+  console.log(`VALHEIM_HOST=${config.valheim.host}`);
+  console.log(`VALHEIM_PORT=${config.valheim.port}`);
+  console.log(`VALHEIM_QUERY_CRON=${config.valheim.queryCron}`);
+  console.log(`TELEGRAM_CHAT_ID=${config.telegram.chatId}`);
+  console.log(`TELEGRAM_BOT=${config.telegram.bot}`);
+  console.log(`TELEGRAM_STARTUP_MESSAGE=${config.telegram.startupMessage}`);
+  console.log(`TELEGRAM_ENABLED=${config.telegram.enabled}`);
+  console.log(`METRICS_ENABLED=${config.metrics.enabled}`);
+  console.log(`WEBHOOK_ENABLED=${config.webhook.enabled}`);
+  console.log(`CORS_ENABLED=${config.cors.enabled}`);
+  console.log(`CORS_ALLOW_ORIGIN=${config.cors.allowOrigin}`);
 
-  if (process.env.METRICS_ENABLED === "true") {
+  if (config.metrics.enabled) {
     app.use(apiMetrics());
   }
 
   app.use(express.json());
   app.use("/", router);
-  app.listen(PORT, HOST);
+  const server = app.listen(PORT, HOST);
 
   const startMessage = `Valheim Server Status running on http://${HOST}:${PORT}`;
   console.log(startMessage);
 
-  if (process.env.TELEGRAM_STARTUP_MESSAGE === "true") {
+  if (config.telegram.startupMessage) {
     telegram.sendTelegramMessage(startMessage);
   }
 
   valheim.queryServer();
+
+  // Graceful shutdown: stop accepting connections and close cleanly
+  function shutdown(signal) {
+    console.log(`${signal} received, shutting down...`);
+    server.close(() => {
+      console.log("HTTP server closed, exiting.");
+      process.exit(0);
+    });
+    // Force-exit if connections don't drain in time
+    setTimeout(() => {
+      console.error("Timed out waiting for connections, forcing exit.");
+      process.exit(1);
+    }, 10000).unref();
+  }
+
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
 }
 
 if (require.main === module) {

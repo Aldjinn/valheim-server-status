@@ -1,6 +1,7 @@
 const { GameDig } = require('gamedig'); 
 const prometheus = require("prom-client");
 const telegram = require("./telegram.js");
+const config = require("./config.js");
 
 const playerCount = new prometheus.Gauge({
   name: "player_count",
@@ -26,8 +27,8 @@ module.exports = {
     GameDig
       .query({
         type: "valheim",
-        host: process.env.VALHEIM_HOST,
-        port: process.env.VALHEIM_PORT,
+        host: config.valheim.host,
+        port: config.valheim.port,
         debug: false,
         requestRules: true,
       })
@@ -38,7 +39,9 @@ module.exports = {
         json.numberOfPlayers = state.players.length;
         gamedigResult = json;
 
-        console.log(gamedigResult);
+        console.log(
+          `query OK: ${gamedigResult.name} | players: ${gamedigResult.numberOfPlayers}`
+        );
         this.adjustMetrics(gamedigResult);
         this.checkPlayerLeftOrJoined(gamedigResult);
         return gamedigResult;
@@ -49,7 +52,7 @@ module.exports = {
   },
 
   adjustMetrics: function (gamedigResult) {
-    if (process.env.METRICS_ENABLED === "true") {
+    if (config.metrics.enabled) {
       playerCount.set(gamedigResult.players.length);
       serverInfo.set(
         {
