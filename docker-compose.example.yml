@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   valheim-server-status:
     container_name: valheim-server-status

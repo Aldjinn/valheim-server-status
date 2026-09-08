@@ -1,1 +1,10 @@
 .env
+node_modules
+npm-debug.log*
+.git
+.github
+__tests__
+__mocks__
+*.md
+LICENSE
+coverage

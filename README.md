@@ -85,7 +85,7 @@ see <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS> for further informa
 
 Some metrics are available for scraping via <http://localhost:13080/metrics> if the application is started with METRICS_ENABLED='true'.
 
-```
+```txt
 # HELP player_count number of players
 # TYPE player_count gauge
 player_count 1
