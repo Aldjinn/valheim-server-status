@@ -1,6 +1,7 @@
-const gamedig = require("gamedig");
+const { GameDig } = require("gamedig");
 const prometheus = require("prom-client");
 const telegram = require("./telegram.js");
+const config = require("./config.js");
 
 const playerCount = new prometheus.Gauge({
   name: "player_count",
@@ -23,14 +24,13 @@ module.exports = {
   },
 
   queryServer: function () {
-    gamedig
-      .query({
-        type: "valheim",
-        host: process.env.VALHEIM_HOST,
-        port: process.env.VALHEIM_PORT,
-        debug: false,
-        requestRules: true,
-      })
+    GameDig.query({
+      type: "valheim",
+      host: config.valheim.host,
+      port: config.valheim.port,
+      debug: false,
+      requestRules: true,
+    })
       .then((state) => {
         // add querydate to result
         let json = JSON.parse(JSON.stringify(state));
@@ -38,7 +38,9 @@ module.exports = {
         json.numberOfPlayers = state.players.length;
         gamedigResult = json;
 
-        console.log(gamedigResult);
+        console.log(
+          `query OK: ${gamedigResult.name} | players: ${gamedigResult.numberOfPlayers}`,
+        );
         this.adjustMetrics(gamedigResult);
         this.checkPlayerLeftOrJoined(gamedigResult);
         return gamedigResult;
@@ -49,7 +51,7 @@ module.exports = {
   },
 
   adjustMetrics: function (gamedigResult) {
-    if (process.env.METRICS_ENABLED === "true") {
+    if (config.metrics.enabled) {
       playerCount.set(gamedigResult.players.length);
       serverInfo.set(
         {
@@ -57,7 +59,7 @@ module.exports = {
           name: gamedigResult.name,
           map: gamedigResult.map,
         },
-        1
+        1,
       );
     }
   },
@@ -66,7 +68,7 @@ module.exports = {
     console.log(
       "there are currently " +
         gamedigResult.players.length +
-        " players on the server"
+        " players on the server",
     );
 
     if (currentNumberOfPlayers < 0) {
@@ -83,13 +85,9 @@ module.exports = {
         console.log("number of players " + change);
 
         if (currentNumberOfPlayers < gamedigResult.players.length) {
-          telegram.sendTelegramMessage(
-            "Player joined. " + change
-          );
+          telegram.sendTelegramMessage("Player joined. " + change);
         } else {
-          telegram.sendTelegramMessage(
-            "Player left. " + change
-          );
+          telegram.sendTelegramMessage("Player left. " + change);
         }
       }
       currentNumberOfPlayers = gamedigResult.players.length;

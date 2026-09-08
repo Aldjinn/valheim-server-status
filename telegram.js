@@ -1,20 +1,21 @@
+"use strict";
+
+const config = require("./config");
 const axios = require("axios");
 
 module.exports = {
   sendTelegramMessage: function (message) {
-    if (process.env.TELEGRAM_ENABLED === "true") {
+    if (config.telegram.enabled) {
       const data = {
-        chat_id: process.env.TELEGRAM_CHAT_ID,
+        chat_id: config.telegram.chatId,
         text: message,
         disable_notification: true,
       };
       console.log("sendTelegramMessage: " + message);
       axios
         .post(
-          "https://api.telegram.org/" +
-            process.env.TELEGRAM_BOT +
-            "/sendMessage",
-          data
+          "https://api.telegram.org/" + config.telegram.bot + "/sendMessage",
+          data,
         )
         .then((res) => {
           console.log(`sendTelegramMessage: ${res.status}`);
