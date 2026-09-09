@@ -149,4 +149,4 @@ docker run --rm -p 13080:13080 --env-file .env valheim-server-status:local
 
 ## License
 
-[MIT](LICENSE)
+[BSD 3-Clause](LICENSE)
