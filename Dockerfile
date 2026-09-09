@@ -3,6 +3,17 @@ FROM node:lts-alpine
 WORKDIR /usr/src/app
 ENV NODE_ENV=production
 
+# Inject the git commit at build time so /version works in the image
+# (the .git directory is not copied into the image).
+ARG GIT_COMMIT
+ARG GIT_COMMIT_SUBJECT
+ARG GIT_COMMIT_AUTHORED_ON
+ARG GIT_COMMIT_COMMITTED_ON
+ENV GIT_COMMIT=$GIT_COMMIT \
+    GIT_COMMIT_SUBJECT=$GIT_COMMIT_SUBJECT \
+    GIT_COMMIT_AUTHORED_ON=$GIT_COMMIT_AUTHORED_ON \
+    GIT_COMMIT_COMMITTED_ON=$GIT_COMMIT_COMMITTED_ON
+
 # Install dependencies first for better layer caching
 # --loglevel=error suppresses upstream ERESOLVE peer-dep warnings
 # (babel-preset-current-node-syntax declares @babel/core ^7, project uses 8)

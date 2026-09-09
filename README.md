@@ -137,6 +137,22 @@ docker build -t valheim-server-status:local .
 docker run --rm -p 13080:13080 --env-file .env valheim-server-status:local
 ```
 
+The `/version` endpoint reports the git commit of the running build. In the
+Docker image the `.git` directory is not present, so the commit is injected at
+build time via build args. Pass them to `docker build` to populate `/version`:
+
+```bash
+docker build \
+  --build-arg GIT_COMMIT="$(git rev-parse HEAD)" \
+  --build-arg GIT_COMMIT_SUBJECT="$(git log -1 --pretty=%s)" \
+  --build-arg GIT_COMMIT_AUTHORED_ON="$(git log -1 --pretty=%aI)" \
+  --build-arg GIT_COMMIT_COMMITTED_ON="$(git log -1 --pretty=%cI)" \
+  -t valheim-server-status:local .
+```
+
+When run from a git checkout (outside Docker), `/version` reads the commit
+info directly from the local `.git` directory instead.
+
 ## Used Libraries
 
 - query server data: [node-GameDig](https://github.com/gamedig/node-gamedig)
@@ -149,4 +165,4 @@ docker run --rm -p 13080:13080 --env-file .env valheim-server-status:local
 
 ## License
 
-[MIT](LICENSE)
+[BSD 3-Clause](LICENSE)

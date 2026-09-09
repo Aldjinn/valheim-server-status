@@ -47,6 +47,11 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: aldjinn/valheim-server-status:develop
+          build-args: |
+            GIT_COMMIT=${{ github.sha }}
+            GIT_COMMIT_SUBJECT=${{ github.event.head_commit.message }}
+            GIT_COMMIT_AUTHORED_ON=${{ github.event.head_commit.timestamp }}
+            GIT_COMMIT_COMMITTED_ON=${{ github.event.head_commit.timestamp }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
