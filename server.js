@@ -48,6 +48,18 @@ router.get("/status", (req, res) => {
 });
 
 router.get("/version", (req, res) => {
+  // Prefer the commit hash injected at build time (Docker), fall back to
+  // reading the local .git directory (dev checkout).
+  if (process.env.GIT_COMMIT) {
+    res.send({
+      hash: process.env.GIT_COMMIT,
+      subject: process.env.GIT_COMMIT_SUBJECT || "",
+      authoredOn: process.env.GIT_COMMIT_AUTHORED_ON || "",
+      committedOn: process.env.GIT_COMMIT_COMMITTED_ON || "",
+    });
+    return;
+  }
+
   git.getLastCommit(function (err, commit) {
     if (err) {
       console.error("Failed to read last commit:", err.message);
