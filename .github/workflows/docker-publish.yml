@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: docker-publish
+  cancel-in-progress: true
+
 jobs:
   docker:
     runs-on: ubuntu-latest
